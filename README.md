@@ -3,7 +3,7 @@ Live shared preferences library for Android
 
 [![](https://jitpack.io/v/ibrahimsn98/live-preferences.svg)](https://jitpack.io/#ibrahimsn98/live-preferences)
 
-# Setup
+## Setup
 ```gradle
 allprojects {
     repositories {
@@ -16,7 +16,7 @@ dependencies {
 }
 ```
 
-# Usage
+## Usage
 ```kotlin
 val preferences = PreferenceManager.getDefaultSharedPreferences(this)
 val liveSharedPreferences = LiveSharedPreferences(preferences)
@@ -26,11 +26,11 @@ liveSharedPreferences.getString("exampleString", "default").observe(this, Observ
 })
 
 liveSharedPreferences.getInt("exampleInt", 0).observe(this, Observer<Int> { value ->
-    Log.d("###", value.toString())
+    Log.d(TAG, value.toString())
 })
 
 liveSharedPreferences.getBoolean("exampleBoolean", false).observe(this, Observer<Boolean> { value ->
-    Log.d("###", value.toString())
+    Log.d(TAG, value.toString())
 })
 ```
 
@@ -38,7 +38,7 @@ Additionally, you can also observe multiple preferences which are same type in t
 
 ```kotlin
 liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).observe(this, Observer<Pair<String, Boolean>> { value ->
-    Log.d("###", "key: ${value!!.first} value: ${value.second}")
+    Log.d(TAG, "key: ${value!!.first} value: ${value.second}")
 })
 ```
 
