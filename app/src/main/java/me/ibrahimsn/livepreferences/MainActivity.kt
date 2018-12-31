@@ -31,5 +31,9 @@ class MainActivity : AppCompatActivity() {
         liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).observe(this, Observer<Pair<String, Boolean>> { value ->
             Log.d("###", "key: ${value!!.first} value: ${value.second}")
         })
+
+        liveSharedPreferences.listenUpdatesOnly(listOf("pref1", "pref2", "pref3")).observe(this, Observer { key ->
+            Log.d("###", "$key updated!")
+        })
     }
 }

@@ -57,4 +57,8 @@ class LiveSharedPreferences constructor(private val preferences: SharedPreferenc
     public fun <T> listenMultiple(keys: List<String>, defaultValue: T): MultiPreference<T> {
         return MultiPreference(updates, preferences, keys, defaultValue)
     }
+
+    public fun listenUpdatesOnly(keys: List<String>): MultiPreferenceAny {
+        return MultiPreferenceAny(updates, keys)
+    }
 }

@@ -42,6 +42,14 @@ liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).o
 })
 ```
 
+For listening only updates without values (They can be different type of preferences)
+
+```kotlin
+liveSharedPreferences.listenUpdatesOnly(listOf("pref1", "pref2", "pref3")).observe(this, Observer { key ->
+    Log.d(TAG, "$key updated!")
+})
+```
+
 License
 --------
 
