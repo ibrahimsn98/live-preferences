@@ -17,6 +17,8 @@ class MultiPreference<T> constructor(updates: Observable<String>,
     private val disposable = CompositeDisposable()
 
     init {
+        value = Pair(keys[0], (preferences.all[keys[0]] as T) ?: defaultValue)
+
         disposable.add(updates.filter { t -> keys.contains(t) }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object: DisposableObserver<String>() {
                 override fun onComplete() {

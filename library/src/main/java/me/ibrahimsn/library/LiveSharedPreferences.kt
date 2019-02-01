@@ -13,7 +13,9 @@ class LiveSharedPreferences constructor(private val preferences: SharedPreferenc
     init {
         updates = Observable.create(ObservableOnSubscribe<String> { emitter ->
             listener = OnSharedPreferenceChangeListener { _, key -> emitter.onNext(key) }
+
             emitter.setCancellable { preferences.unregisterOnSharedPreferenceChangeListener(listener) }
+
             preferences.registerOnSharedPreferenceChangeListener(listener)
         }).share()
     }

@@ -34,4 +34,9 @@ class LivePreference<T> constructor(updates: Observable<String>,
                 }
             }))
     }
+
+    override fun onInactive() {
+        super.onInactive()
+        disposable.dispose()
+    }
 }
