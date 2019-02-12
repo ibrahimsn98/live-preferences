@@ -17,8 +17,6 @@ class LivePreference<T> constructor(updates: Observable<String>,
     private val disposable = CompositeDisposable()
 
     init {
-        value = (preferences.all[key] as T) ?: defaultValue
-
         disposable.add(updates.filter { t -> t == key }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object: DisposableObserver<String>() {
                 override fun onComplete() {
