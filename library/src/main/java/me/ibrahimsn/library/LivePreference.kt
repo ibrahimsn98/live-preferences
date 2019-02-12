@@ -35,6 +35,11 @@ class LivePreference<T> constructor(updates: Observable<String>,
             }))
     }
 
+    override fun onActive() {
+        super.onActive()
+        value = (preferences.all[key] as T) ?: defaultValue
+    }
+
     override fun onInactive() {
         super.onInactive()
         disposable.dispose()
