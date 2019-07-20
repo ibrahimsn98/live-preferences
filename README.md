@@ -12,7 +12,7 @@ allprojects {
     }
 }
 dependencies {
-      implementation 'com.github.ibrahimsn98:live-preferences:1.5'
+      implementation 'com.github.ibrahimsn98:live-preferences:1.6'
 }
 ```
 
@@ -37,8 +37,8 @@ liveSharedPreferences.getBoolean("exampleBoolean", false).observe(this, Observer
 Additionally, you can also observe multiple preferences which are same type in the one Observer object.
 
 ```kotlin
-liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).observe(this, Observer<Pair<String, Boolean>> { value ->
-    Log.d(TAG, "key: ${value!!.first} value: ${value.second}")
+liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).observe(this, Observer {
+
 })
 ```
 

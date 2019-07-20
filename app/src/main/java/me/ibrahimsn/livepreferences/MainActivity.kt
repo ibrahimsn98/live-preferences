@@ -16,24 +16,24 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val liveSharedPreferences = LiveSharedPreferences(preferences)
 
-        liveSharedPreferences.getString("exampleString", "default").observe(this, Observer<String> { value ->
-            Log.d("###", value)
+        liveSharedPreferences.getString("exampleString", "default").observe(this, Observer<String> {
+            Log.d("###", it)
         })
 
-        liveSharedPreferences.getInt("exampleInt", 0).observe(this, Observer<Int> { value ->
-            Log.d("###", value.toString())
+        liveSharedPreferences.getInt("exampleInt", 0).observe(this, Observer<Int> {
+            Log.d("###", it.toString())
         })
 
-        liveSharedPreferences.getBoolean("exampleBoolean", false).observe(this, Observer<Boolean> { value ->
-            Log.d("###", value.toString())
+        liveSharedPreferences.getBoolean("exampleBoolean", false).observe(this, Observer<Boolean> {
+            Log.d("###", it.toString())
         })
 
-        liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).observe(this, Observer<Pair<String, Boolean>> { value ->
-            Log.d("###", "key: ${value!!.first} value: ${value.second}")
+        liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).observe(this, Observer {
+
         })
 
-        liveSharedPreferences.listenUpdatesOnly(listOf("pref1", "pref2", "pref3")).observe(this, Observer { key ->
-            Log.d("###", "$key updated!")
+        liveSharedPreferences.listenUpdatesOnly(listOf("pref1", "pref2", "pref3")).observe(this, Observer {
+            Log.d("###", "$it updated!")
         })
     }
 }
