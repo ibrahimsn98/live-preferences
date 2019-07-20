@@ -12,7 +12,7 @@ allprojects {
     }
 }
 dependencies {
-      implementation 'com.github.ibrahimsn98:live-preferences:1.1'
+      implementation 'com.github.ibrahimsn98:live-preferences:1.5'
 }
 ```
 
