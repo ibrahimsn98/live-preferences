@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.SharedPreferences
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
@@ -14,7 +14,7 @@ class MultiPreference<T> constructor(private val updates: Observable<String>,
                                      private val keys: List<String>,
                                      private val defaultValue: T) : MutableLiveData<Map<String, T>>() {
 
-    private val disposable = CompositeDisposable()
+    private var disposable: Disposable? = null
     private val values = mutableMapOf<String, T>()
 
     init {
@@ -26,7 +26,7 @@ class MultiPreference<T> constructor(private val updates: Observable<String>,
         super.onActive()
         value = values
 
-        disposable.add(updates.filter { t -> keys.contains(t) }.subscribeOn(Schedulers.io())
+        disposable = updates.filter { t -> keys.contains(t) }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object: DisposableObserver<String>() {
                 override fun onComplete() {
 
@@ -40,11 +40,11 @@ class MultiPreference<T> constructor(private val updates: Observable<String>,
                 override fun onError(e: Throwable) {
 
                 }
-            }))
+            })
     }
 
     override fun onInactive() {
         super.onInactive()
-        disposable.dispose()
+        disposable?.dispose()
     }
 }

@@ -3,21 +3,23 @@ package me.ibrahimsn.library
 import android.content.SharedPreferences
 import io.reactivex.Observable
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
+import android.util.Log
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.subjects.PublishSubject
 
 class LiveSharedPreferences constructor(private val preferences: SharedPreferences) {
 
-    private lateinit var listener: OnSharedPreferenceChangeListener
-    private val updates: Observable<String>
+    private val publisher = PublishSubject.create<String>()
+    private val listener = OnSharedPreferenceChangeListener { _, key -> publisher.onNext(key) }
 
-    init {
-        updates = Observable.create(ObservableOnSubscribe<String> { emitter ->
-            listener = OnSharedPreferenceChangeListener { _, key -> emitter.onNext(key) }
-
-            // emitter.setCancellable { preferences.unregisterOnSharedPreferenceChangeListener(listener) }
-
-            preferences.registerOnSharedPreferenceChangeListener(listener)
-        }).share()
+    /**
+     * Detect subscription and dispose events
+     */
+    private val updates = publisher.doOnSubscribe {
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+    }.doOnDispose {
+        if (!publisher.hasObservers())
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 
     fun getPreferences(): SharedPreferences {
@@ -50,9 +52,5 @@ class LiveSharedPreferences constructor(private val preferences: SharedPreferenc
 
     fun <T> listenMultiple(keys: List<String>, defaultValue: T): MultiPreference<T> {
         return MultiPreference(updates, preferences, keys, defaultValue)
-    }
-
-    fun listenUpdatesOnly(keys: List<String>): MultiPreferenceAny {
-        return MultiPreferenceAny(updates, keys)
     }
 }

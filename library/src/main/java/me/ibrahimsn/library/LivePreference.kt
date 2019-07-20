@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.content.SharedPreferences
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
@@ -14,11 +14,13 @@ class LivePreference<T> constructor(private val updates: Observable<String>,
                                     private val key: String,
                                     private val defaultValue: T) : MutableLiveData<T>() {
 
-    private val disposable = CompositeDisposable()
+    private var disposable: Disposable? = null
 
     override fun onActive() {
         super.onActive()
-        disposable.add(updates.filter { t -> t == key }.subscribeOn(Schedulers.io())
+        value = (preferences.all[key] as T) ?: defaultValue
+
+        disposable = updates.filter { t -> t == key }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object: DisposableObserver<String>() {
                 override fun onComplete() {
 
@@ -31,13 +33,11 @@ class LivePreference<T> constructor(private val updates: Observable<String>,
                 override fun onError(e: Throwable) {
 
                 }
-            }))
-
-        value = (preferences.all[key] as T) ?: defaultValue
+            })
     }
 
     override fun onInactive() {
         super.onInactive()
-        disposable.dispose()
+        disposable?.dispose()
     }
 }
