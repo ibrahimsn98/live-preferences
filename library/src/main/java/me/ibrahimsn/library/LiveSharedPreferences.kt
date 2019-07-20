@@ -20,47 +20,39 @@ class LiveSharedPreferences constructor(private val preferences: SharedPreferenc
         }).share()
     }
 
-    public fun getString(key: String, defaultValue: String): LivePreference<String> {
-        checkNotNull(key)
-        checkNotNull(defaultValue)
+    fun getPreferences(): SharedPreferences {
+        return preferences
+    }
+
+    fun getString(key: String, defaultValue: String): LivePreference<String> {
         return LivePreference(updates, preferences, key, defaultValue)
     }
 
-    public fun getInt(key: String, defaultValue: Int): LivePreference<Int> {
-        checkNotNull(key)
-        checkNotNull(defaultValue)
+    fun getInt(key: String, defaultValue: Int): LivePreference<Int> {
         return LivePreference(updates, preferences, key, defaultValue)
     }
 
-    public fun getBoolean(key: String, defaultValue: Boolean): LivePreference<Boolean> {
-        checkNotNull(key)
-        checkNotNull(defaultValue)
+    fun getBoolean(key: String, defaultValue: Boolean): LivePreference<Boolean> {
         return LivePreference(updates, preferences, key, defaultValue)
     }
 
-    public fun getFloat(key: String, defaultValue: Float): LivePreference<Float> {
-        checkNotNull(key)
-        checkNotNull(defaultValue)
+    fun getFloat(key: String, defaultValue: Float): LivePreference<Float> {
         return LivePreference(updates, preferences, key, defaultValue)
     }
 
-    public fun getLong(key: String, defaultValue: Long): LivePreference<Long> {
-        checkNotNull(key)
-        checkNotNull(defaultValue)
+    fun getLong(key: String, defaultValue: Long): LivePreference<Long> {
         return LivePreference(updates, preferences, key, defaultValue)
     }
 
-    public fun getStringSet(key: String, defaultValue: Set<String>): LivePreference<Set<String>> {
-        checkNotNull(key)
-        checkNotNull(defaultValue)
+    fun getStringSet(key: String, defaultValue: Set<String>): LivePreference<Set<String>> {
         return LivePreference(updates, preferences, key, defaultValue)
     }
 
-    public fun <T> listenMultiple(keys: List<String>, defaultValue: T): MultiPreference<T> {
+    fun <T> listenMultiple(keys: List<String>, defaultValue: T): MultiPreference<T> {
         return MultiPreference(updates, preferences, keys, defaultValue)
     }
 
-    public fun listenUpdatesOnly(keys: List<String>): MultiPreferenceAny {
+    fun listenUpdatesOnly(keys: List<String>): MultiPreferenceAny {
         return MultiPreferenceAny(updates, keys)
     }
 }

@@ -9,14 +9,15 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 @Suppress("UNCHECKED_CAST")
-class LivePreference<T> constructor(updates: Observable<String>,
+class LivePreference<T> constructor(private val updates: Observable<String>,
                                     private val preferences: SharedPreferences,
                                     private val key: String,
                                     private val defaultValue: T) : MutableLiveData<T>() {
 
     private val disposable = CompositeDisposable()
 
-    init {
+    override fun onActive() {
+        super.onActive()
         disposable.add(updates.filter { t -> t == key }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object: DisposableObserver<String>() {
                 override fun onComplete() {
@@ -31,10 +32,7 @@ class LivePreference<T> constructor(updates: Observable<String>,
 
                 }
             }))
-    }
 
-    override fun onActive() {
-        super.onActive()
         value = (preferences.all[key] as T) ?: defaultValue
     }
 
