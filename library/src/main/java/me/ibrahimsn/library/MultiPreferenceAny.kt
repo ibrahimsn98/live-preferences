@@ -7,12 +7,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
-class MultiPreferenceAny constructor(updates: Observable<String>,
+class MultiPreferenceAny constructor(private val updates: Observable<String>,
                                      private val keys: List<String>) : MutableLiveData<String>() {
 
     private val disposable = CompositeDisposable()
 
-    init {
+    override fun onActive() {
+        super.onActive()
         disposable.add(updates.filter { t -> keys.contains(t) }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object: DisposableObserver<String>() {
                 override fun onComplete() {
@@ -29,8 +30,8 @@ class MultiPreferenceAny constructor(updates: Observable<String>,
             }))
     }
 
-    override fun onActive() {
-        super.onActive()
-        value = keys[0]
+    override fun onInactive() {
+        super.onInactive()
+        disposable.dispose()
     }
 }
