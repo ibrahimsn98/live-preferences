@@ -1,10 +1,7 @@
 package me.ibrahimsn.library
 
 import android.content.SharedPreferences
-import io.reactivex.Observable
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
-import android.util.Log
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.subjects.PublishSubject
 
 class LiveSharedPreferences constructor(private val preferences: SharedPreferences) {
@@ -26,7 +23,7 @@ class LiveSharedPreferences constructor(private val preferences: SharedPreferenc
         return preferences
     }
 
-    fun getString(key: String, defaultValue: String): LivePreference<String> {
+    fun getString(key: String, defaultValue: String?): LivePreference<String> {
         return LivePreference(updates, preferences, key, defaultValue)
     }
 
