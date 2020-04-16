@@ -1,7 +1,7 @@
 package me.ibrahimsn.library
 
-import android.arch.lifecycle.MutableLiveData
 import android.content.SharedPreferences
+import androidx.lifecycle.MutableLiveData
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -19,7 +19,7 @@ class MultiPreference<T> constructor(private val updates: Observable<String>,
 
     init {
         for (key in keys)
-            values[key] = preferences.all[key] as T ?: defaultValue
+            values[key] = (preferences.all[key] as T) ?: defaultValue
     }
 
     override fun onActive() {
@@ -28,18 +28,14 @@ class MultiPreference<T> constructor(private val updates: Observable<String>,
 
         disposable = updates.filter { t -> keys.contains(t) }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object: DisposableObserver<String>() {
-                override fun onComplete() {
-
-                }
+                override fun onComplete() {}
 
                 override fun onNext(t: String) {
-                    values[t] = preferences.all[t] as T ?: defaultValue
+                    values[t] = (preferences.all[t] as T) ?: defaultValue
                     postValue(values)
                 }
 
-                override fun onError(e: Throwable) {
-
-                }
+                override fun onError(e: Throwable) {}
             })
     }
 

@@ -1,9 +1,9 @@
 package me.ibrahimsn.livepreferences
 
-import android.arch.lifecycle.Observer
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.preference.PreferenceManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import me.ibrahimsn.library.LiveSharedPreferences
 
 class MainActivity : AppCompatActivity() {
