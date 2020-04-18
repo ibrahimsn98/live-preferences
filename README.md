@@ -12,7 +12,7 @@ allprojects {
     }
 }
 dependencies {
-      implementation 'com.github.ibrahimsn98:live-preferences:1.6'
+      implementation 'com.github.ibrahimsn98:live-preferences:1.9'
 }
 ```
 
@@ -42,14 +42,6 @@ liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).o
 })
 ```
 
-For listening only updates without values (They can be different type of preferences)
-
-```kotlin
-liveSharedPreferences.listenUpdatesOnly(listOf("pref1", "pref2", "pref3")).observe(this, Observer { key ->
-    Log.d(TAG, "$key updated!")
-})
-```
-
 License
 --------
 
@@ -75,6 +67,3 @@ License
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 	© 2018 Git
-
-
-> Follow me on Twitter [@ibrahimsn98](https://twitter.com/ibrahimsn98)

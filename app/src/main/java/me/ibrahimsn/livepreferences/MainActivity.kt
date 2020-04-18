@@ -15,20 +15,28 @@ class MainActivity : AppCompatActivity() {
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val liveSharedPreferences = LiveSharedPreferences(preferences)
 
-        liveSharedPreferences.getString("exampleString", "default").observe(this, Observer<String> {
-            //Log.d("###", it)
-        })
+        liveSharedPreferences
+            .getString("exampleString", "default")
+            .observe(this, Observer {
+                //Log.d("###", it)
+            })
 
-        liveSharedPreferences.getInt("exampleInt", 0).observe(this, Observer<Int> {
-            //Log.d("###", it.toString())
-        })
+        liveSharedPreferences
+            .getInt("exampleInt", 0)
+            .observe(this, Observer {
+                //Log.d("###", it.toString())
+            })
 
-        liveSharedPreferences.getBoolean("exampleBoolean", false).observe(this, Observer<Boolean> {
-            //Log.d("###", it.toString())
-        })
+        liveSharedPreferences
+            .getBoolean("exampleBoolean", false)
+            .observe(this, Observer {
+                //Log.d("###", it.toString())
+            })
 
-        liveSharedPreferences.listenMultiple(listOf("bool1", "bool2", "bool3"), false).observe(this, Observer {
+        liveSharedPreferences
+            .listenMultiple(listOf("bool1", "bool2", "bool3"), false)
+            .observe(this, Observer {
 
-        })
+            })
     }
 }

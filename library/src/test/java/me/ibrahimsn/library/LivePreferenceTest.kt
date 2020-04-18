@@ -44,9 +44,9 @@ class LivePreferenceTest : BasePreferenceTest() {
     fun initializePreferences() {
         activityController = Robolectric.buildActivity(TestActivity::class.java).create()
         activity = activityController.start().get()
-        val preferences = PreferenceManager.getDefaultSharedPreferences(
-            activity
-        )
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(activity)
+
         preferences.edit()
             .putString(stringTypeKey, null)
             .putBoolean(booleanTypeKey, false)
@@ -63,7 +63,7 @@ class LivePreferenceTest : BasePreferenceTest() {
 
     @Test
     fun stringValueCheck() {
-        liveSharedPreferences.getPreferences()
+        liveSharedPreferences.preferences
             .edit()
             .putString(stringTypeKey, stringTypeValue)
             .apply()
@@ -77,7 +77,7 @@ class LivePreferenceTest : BasePreferenceTest() {
 
     @Test
     fun booleanValueCheck() {
-        liveSharedPreferences.getPreferences()
+        liveSharedPreferences.preferences
             .edit()
             .putBoolean(booleanTypeKey, booleanTypeValue)
             .apply()
@@ -91,7 +91,7 @@ class LivePreferenceTest : BasePreferenceTest() {
 
     @Test
     fun intValueCheck() {
-        liveSharedPreferences.getPreferences()
+        liveSharedPreferences.preferences
             .edit()
             .putInt(intTypeKey, intTypeValue)
             .apply()
@@ -105,7 +105,7 @@ class LivePreferenceTest : BasePreferenceTest() {
 
     @Test
     fun longValueCheck() {
-        liveSharedPreferences.getPreferences()
+        liveSharedPreferences.preferences
             .edit()
             .putLong(longTypeKey, longTypeValue)
             .apply()
@@ -119,7 +119,7 @@ class LivePreferenceTest : BasePreferenceTest() {
 
     @Test
     fun floatValueCheck() {
-        liveSharedPreferences.getPreferences()
+        liveSharedPreferences.preferences
             .edit()
             .putFloat(floatTypeKey, floatTypeValue)
             .apply()
@@ -133,7 +133,7 @@ class LivePreferenceTest : BasePreferenceTest() {
 
     @Test
     fun stringSetValueCheck() {
-        liveSharedPreferences.getPreferences()
+        liveSharedPreferences.preferences
             .edit()
             .putStringSet(stringSetTypeKey, stringSetTypeValue)
             .apply()
@@ -153,5 +153,4 @@ class LivePreferenceTest : BasePreferenceTest() {
             )
         })
     }
-
 }
