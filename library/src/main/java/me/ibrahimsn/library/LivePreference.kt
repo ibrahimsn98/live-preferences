@@ -19,7 +19,8 @@ class LivePreference<T> constructor(
     private var lastValue: T? = null
 
     init {
-        value = (preferences.all[key] as T) ?: defaultValue
+        lastValue = (preferences.all[key] as T) ?: defaultValue
+        value = lastValue
     }
 
     override fun onActive() {
